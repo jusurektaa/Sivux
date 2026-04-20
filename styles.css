@@ -1425,12 +1425,24 @@ a.link-arrow[href^="mailto:"] {
   overflow: hidden;
 }
 
+/* Mobiilissa display:flex ohittaisi muuten [hidden]-attribuutin */
+.chatbot-panel[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .chatbot-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(26, 24, 20, 0.25);
   backdrop-filter: blur(2px);
   z-index: 59;
+}
+
+.chatbot-backdrop[hidden] {
+  display: none !important;
+  pointer-events: none !important;
 }
 
 .chatbot-header {
