@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-label="Julius portrait illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4f1eb"/>
+      <stop offset="1" stop-color="#e8e3d9"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <circle cx="320" cy="250" r="130" fill="#f2d8c5"/>
+  <path d="M220 240c8-82 62-130 124-130 68 0 116 52 116 126 0 20-3 37-10 54-10-48-58-78-121-78-42 0-78 11-109 28z" fill="#1a1814"/>
+  <rect x="172" y="404" width="296" height="182" rx="96" fill="#1a1814"/>
+  <rect x="284" y="332" width="72" height="70" rx="30" fill="#e6c7b2"/>
+  <circle cx="268" cy="248" r="10" fill="#1a1814"/>
+  <circle cx="372" cy="248" r="10" fill="#1a1814"/>
+  <path d="M270 302c20 18 80 18 100 0" stroke="#b76f44" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <text x="50%" y="602" dominant-baseline="middle" text-anchor="middle" font-family="Outfit, 'Segoe UI', sans-serif" font-size="38" font-weight="600" fill="#1a1814">Julius / Sivux</text>
+</svg>

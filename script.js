@@ -215,6 +215,21 @@
             answer:
               "Sivusto voidaan toteuttaa usealla kielellä, kuten suomeksi ja englanniksi. Kieliversioiden määrä vaikuttaa laajuuteen ja hintaan.",
           },
+          {
+            keys: ["helsinki", "tampere", "turku", "oulu", "espoo", "vantaa", "jyvaskyla", "lahti", "kuopio", "kaupunki"],
+            answer:
+              "Kyllä, palvelemme yrityksiä koko Suomessa (mm. Helsinki, Tampere, Turku, Oulu). Toteutus hoituu etänä tai sovitulla tapaamisella.",
+          },
+          {
+            keys: ["sisaltyy", "paketti", "analytics", "ga4", "search console", "seo", "lomake"],
+            answer:
+              "Paketeissa on nyt avattu konkreettinen sisältö (esim. yhteydenottolomake, GA4, SEO-perusasetukset, 2 kielta Kasvu-paketissa). Katso hinnasto-osion listat.",
+          },
+          {
+            keys: ["kickoff", "aloitus", "palaveri", "ensimma", "ensimmainen"],
+            answer:
+              "Kickoffissa sovitaan tavoite, kohderyhmä, rakenne, vastuut ja aikataulu. Sen jälkeen saat kirjallisen etenemissuunnitelman.",
+          },
         ],
       },
       en: {
@@ -248,6 +263,21 @@
             answer:
               "We can build multilingual websites, for example in Finnish and English. Scope and pricing depend on the number of language versions.",
           },
+          {
+            keys: ["helsinki", "tampere", "turku", "oulu", "espoo", "vantaa", "jyvaskyla", "lahti", "kuopio", "city", "cities"],
+            answer:
+              "Yes. We work with companies across Finland, including Helsinki, Tampere, Turku, and Oulu. Delivery can be fully remote.",
+          },
+          {
+            keys: ["included", "package", "ga4", "analytics", "search console", "seo", "form"],
+            answer:
+              "Each package now lists concrete scope (for example contact form, GA4 setup, SEO baseline, and FI/EN in the Growth package). Check the pricing section for details.",
+          },
+          {
+            keys: ["kickoff", "first meeting", "onboarding", "start", "discovery call"],
+            answer:
+              "In kickoff we agree on goals, audience, structure, responsibilities, and timeline. You then receive a written delivery plan.",
+          },
         ],
       },
     };
@@ -275,13 +305,23 @@
 
     function getAnswer(question) {
       var q = normalize(question);
+      var bestScore = 0;
+      var bestAnswer = "";
       for (var i = 0; i < dict.rules.length; i++) {
         var keys = dict.rules[i].keys;
+        var score = 0;
         for (var j = 0; j < keys.length; j++) {
           if (q.indexOf(normalize(keys[j])) !== -1) {
-            return dict.rules[i].answer;
+            score++;
           }
         }
+        if (score > bestScore) {
+          bestScore = score;
+          bestAnswer = dict.rules[i].answer;
+        }
+      }
+      if (bestScore > 0) {
+        return bestAnswer;
       }
       return dict.unknown;
     }
@@ -372,9 +412,84 @@
     addMessage("bot", dict.welcome);
   }
 
+  function initPriceEstimator() {
+    var forms = document.querySelectorAll(".estimator-form");
+    if (!forms.length) {
+      return;
+    }
+
+    forms.forEach(function (form) {
+      var pagesInput = form.querySelector("input[name='pages']");
+      var languagesSelect = form.querySelector("select[name='languages']");
+      var featureInputs = form.querySelectorAll("input[name='features']");
+      var pagesOut = form.querySelector("[data-est-pages]");
+      var result =
+        form.id === "estimator-en"
+          ? document.getElementById("estimator-result-en")
+          : document.getElementById("estimator-result-fi");
+      var isEn = form.id === "estimator-en";
+
+      if (!pagesInput || !languagesSelect || !result) {
+        return;
+      }
+
+      function formatMoney(value) {
+        if (isEn) {
+          return value.toLocaleString("en-US") + " EUR";
+        }
+        return value.toLocaleString("fi-FI") + " EUR";
+      }
+
+      function updateEstimate() {
+        var pages = Number(pagesInput.value || 1);
+        var languages = Number(languagesSelect.value || 1);
+        var base = 390 + pages * 170;
+        var languageCost = (languages - 1) * 220;
+        var featureCost = 0;
+
+        featureInputs.forEach(function (input) {
+          if (!input.checked) {
+            return;
+          }
+          if (input.value === "analytics") {
+            featureCost += 140;
+          } else if (input.value === "integrations") {
+            featureCost += 360;
+          } else if (input.value === "seo") {
+            featureCost += 280;
+          }
+        });
+
+        var low = Math.round(base + languageCost + featureCost);
+        var high = Math.round(low * 1.28);
+
+        if (pagesOut) {
+          pagesOut.textContent = String(pages);
+        }
+
+        result.innerHTML = isEn
+          ? "Estimate: <strong>around " + formatMoney(low) + " - " + formatMoney(high) + " + VAT</strong>"
+          : "Arvio: <strong>noin " + formatMoney(low) + " - " + formatMoney(high) + " + alv</strong>";
+      }
+
+      pagesInput.addEventListener("input", updateEstimate);
+      languagesSelect.addEventListener("change", updateEstimate);
+      featureInputs.forEach(function (input) {
+        input.addEventListener("change", updateEstimate);
+      });
+      updateEstimate();
+    });
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initChatbot);
   } else {
     initChatbot();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPriceEstimator);
+  } else {
+    initPriceEstimator();
   }
 })();
