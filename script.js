@@ -223,7 +223,7 @@
           {
             keys: ["sisaltyy", "paketti", "analytics", "ga4", "search console", "seo", "lomake"],
             answer:
-              "Paketeissa on nyt avattu konkreettinen sisältö (esim. yhteydenottolomake, GA4, SEO-perusasetukset, 2 kielta Kasvu-paketissa). Katso hinnasto-osion listat.",
+              "Paketeissa on nyt avattu konkreettinen sisältö (esim. yhteydenottolomake, GA4, SEO-perusasetukset, 2 kieltä Kasvu-paketissa). Katso hinnasto-osion listat.",
           },
           {
             keys: ["kickoff", "aloitus", "palaveri", "ensimma", "ensimmainen"],
