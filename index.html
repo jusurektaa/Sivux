@@ -108,7 +108,7 @@
           <li><a href="#prosessi" class="nav-link" data-nav-section="prosessi">Prosessi</a></li>
           <li><a href="#hinnasto" class="nav-link" data-nav-section="hinnasto">Hinnasto</a></li>
           <li><a href="#ukk" class="nav-link" data-nav-section="ukk">UKK</a></li>
-          <li><a href="#yhteys" class="nav-cta" data-nav-section="yhteys">Aloita</a></li>
+          <li><a href="#yhteys" class="nav-cta" data-nav-section="yhteys" data-track="cta_kickoff_nav">Varaa kickoff</a></li>
         </ul>
       </nav>
       <div class="lang-switch" aria-label="Kielivalinta">
@@ -131,8 +131,8 @@
             Selkeä rakenne, nopea toteutus ja julkaisu 10 arkipäivässä.
           </p>
           <div class="hero-actions">
-            <a href="#yhteys" class="btn btn-primary">Aloita projekti</a>
-            <a href="#referenssit" class="btn btn-ghost">Katso asiakastulokset</a>
+            <a href="#yhteys" class="btn btn-primary" data-track="cta_kickoff_hero">Varaa kickoff</a>
+            <a href="#referenssit" class="btn btn-ghost" data-track="cta_results_hero">Katso asiakastulokset</a>
           </div>
         </div>
         <div class="hero-stage" data-reveal data-reveal-delay="0.12">
@@ -154,12 +154,28 @@
         </div>
       </div>
     </section>
+    <section class="trust-strip" aria-label="Luottamustekijät">
+      <div class="container trust-grid" data-reveal-group>
+        <article class="trust-item">
+          <p class="trust-value">24h</p>
+          <p class="trust-label">Vastausaika arkipäivisin</p>
+        </article>
+        <article class="trust-item">
+          <p class="trust-value">10 pv</p>
+          <p class="trust-label">Toimituslupaus kickoffin jälkeen</p>
+        </article>
+        <article class="trust-item">
+          <p class="trust-value">100%</p>
+          <p class="trust-label">Responsiivinen toteutus</p>
+        </article>
+      </div>
+    </section>
 
     <section class="section" id="palvelut">
       <div class="container">
         <header class="section-head" data-reveal>
           <p class="section-kicker">Palvelut</p>
-          <h2>Sama fiilis kuin huippustudioilla. Rakennettu sinun liiketoimintaan.</h2>
+          <h2>Ammattimainen verkkosivusto, joka tukee myyntiä ja luottamusta.</h2>
         </header>
         <div class="cards grid-4" data-reveal-group>
           <article class="card">
@@ -189,7 +205,7 @@
             <p class="section-kicker">Asiakastulokset</p>
             <h2>Tulokset puhuvat, ei geneeriset lupaukset.</h2>
           </div>
-          <a href="#yhteys" class="link-arrow">Varaa kickoff</a>
+          <a href="#yhteys" class="link-arrow" data-track="cta_kickoff_work">Varaa kickoff</a>
         </header>
         <div class="portfolio" data-reveal-group>
           <article class="portfolio-item">
@@ -321,7 +337,7 @@
               <label class="full">Mitä tarvitset?<textarea name="message" rows="4" required placeholder="Kerro tavoite, laajuus ja aikataulu"></textarea></label>
             </div>
             <div class="cta-actions">
-              <button type="submit" class="btn btn-primary btn-on-dark">Lähetä viesti</button>
+              <button type="submit" class="btn btn-primary btn-on-dark" data-track="cta_form_submit">Lähetä viesti</button>
               <a href="#top" class="btn btn-outline-light">Takaisin ylös</a>
             </div>
             <label class="audit-check">

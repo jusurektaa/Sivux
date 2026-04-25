@@ -108,7 +108,7 @@
           <li><a href="#process" class="nav-link" data-nav-section="process">Process</a></li>
           <li><a href="#pricing" class="nav-link" data-nav-section="pricing">Pricing</a></li>
           <li><a href="#faq" class="nav-link" data-nav-section="faq">FAQ</a></li>
-          <li><a href="#contact" class="nav-cta" data-nav-section="contact">Start</a></li>
+          <li><a href="#contact" class="nav-cta" data-nav-section="contact" data-track="cta_kickoff_nav">Book kickoff</a></li>
         </ul>
       </nav>
       <div class="lang-switch" aria-label="Language switch">
@@ -131,8 +131,8 @@
             Clear structure, fast delivery, and launch in 10 business days.
           </p>
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Start project</a>
-            <a href="#work" class="btn btn-ghost">See results</a>
+            <a href="#contact" class="btn btn-primary" data-track="cta_kickoff_hero">Book kickoff</a>
+            <a href="#work" class="btn btn-ghost" data-track="cta_results_hero">See results</a>
           </div>
         </div>
         <div class="hero-stage" data-reveal data-reveal-delay="0.12">
@@ -154,12 +154,28 @@
         </div>
       </div>
     </section>
+    <section class="trust-strip" aria-label="Trust signals">
+      <div class="container trust-grid" data-reveal-group>
+        <article class="trust-item">
+          <p class="trust-value">24h</p>
+          <p class="trust-label">Response time on business days</p>
+        </article>
+        <article class="trust-item">
+          <p class="trust-value">10 days</p>
+          <p class="trust-label">Delivery promise after kickoff</p>
+        </article>
+        <article class="trust-item">
+          <p class="trust-value">100%</p>
+          <p class="trust-label">Responsive implementation</p>
+        </article>
+      </div>
+    </section>
 
     <section class="section" id="services">
       <div class="container">
         <header class="section-head" data-reveal>
           <p class="section-kicker">Services</p>
-          <h2>High-end digital style adapted to your business goals.</h2>
+          <h2>Professional websites built to support growth and trust.</h2>
         </header>
         <div class="cards grid-4" data-reveal-group>
           <article class="card">
@@ -189,7 +205,7 @@
             <p class="section-kicker">Client Results</p>
             <h2>Clear outcomes, not generic claims.</h2>
           </div>
-          <a href="#contact" class="link-arrow">Book kickoff</a>
+          <a href="#contact" class="link-arrow" data-track="cta_kickoff_work">Book kickoff</a>
         </header>
         <div class="portfolio" data-reveal-group>
           <article class="portfolio-item">
@@ -321,7 +337,7 @@
               <label class="full">What do you need?<textarea name="message" rows="4" required placeholder="Share your goal, scope and timeline"></textarea></label>
             </div>
             <div class="cta-actions">
-              <button type="submit" class="btn btn-primary btn-on-dark">Send request</button>
+              <button type="submit" class="btn btn-primary btn-on-dark" data-track="cta_form_submit">Send request</button>
               <a href="#top" class="btn btn-outline-light">Back to top</a>
             </div>
             <label class="audit-check">

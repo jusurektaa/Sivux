@@ -34,12 +34,16 @@
     });
 
     var ticking = false;
+    var lastScrollY = window.scrollY || document.documentElement.scrollTop || 0;
 
     function update() {
       var scrollY = window.scrollY || document.documentElement.scrollTop;
 
       if (siteHeader) {
         siteHeader.classList.toggle("is-scrolled", scrollY > 28);
+        var scrollingDown = scrollY > lastScrollY;
+        var shouldHideHeader = scrollingDown && scrollY > 140;
+        siteHeader.classList.toggle("is-hidden", shouldHideHeader);
       }
 
       if (toTop) {
@@ -70,6 +74,7 @@
         }
       });
 
+      lastScrollY = scrollY;
       ticking = false;
     }
 
@@ -532,32 +537,70 @@
       });
 
       form.addEventListener("submit", function (event) {
-        var hasInvalid = false;
-
         fields.forEach(function (field) {
           markFieldState(field);
-          if (!field.checkValidity()) {
-            hasInvalid = true;
-          }
         });
 
-        if (hasInvalid) {
+        if (!form.checkValidity()) {
           event.preventDefault();
+          if (typeof form.reportValidity === "function") {
+            form.reportValidity();
+          }
           status.hidden = false;
           status.className = "form-status is-error";
           status.textContent =
-            form.closest("[data-lang='en']") || document.documentElement.lang === "en"
+            document.documentElement.lang === "en"
               ? "Please check highlighted fields before sending."
               : "Tarkista korostetut kentät ennen lähettämistä.";
           return;
         }
 
+        // Let native form submit proceed to FormSubmit (email delivery).
         status.hidden = false;
         status.className = "form-status is-success";
         status.textContent =
-          form.closest("[data-lang='en']") || document.documentElement.lang === "en"
+          document.documentElement.lang === "en"
             ? "Looks good. Sending your message..."
             : "Näyttää hyvältä. Lähetetään viestiä...";
+      });
+    });
+  }
+
+  function initTracking() {
+    function emitEvent(name, params) {
+      try {
+        if (typeof window.gtag === "function") {
+          window.gtag("event", name, params || {});
+          return;
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: name,
+          params: params || {},
+        });
+      } catch (e) {
+        // no-op: tracking should never break UI
+      }
+    }
+
+    document.querySelectorAll("[data-track]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var key = el.getAttribute("data-track");
+        if (!key) {
+          return;
+        }
+        emitEvent("cta_click", {
+          cta_key: key,
+          page_lang: document.documentElement.lang || "fi",
+        });
+      });
+    });
+
+    document.querySelectorAll(".contact-form").forEach(function (form) {
+      form.addEventListener("submit", function () {
+        emitEvent("lead_submit_attempt", {
+          page_lang: document.documentElement.lang || "fi",
+        });
       });
     });
   }
@@ -572,6 +615,12 @@
     document.addEventListener("DOMContentLoaded", initFormValidation);
   } else {
     initFormValidation();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTracking);
+  } else {
+    initTracking();
   }
 
   if (document.readyState === "loading") {
