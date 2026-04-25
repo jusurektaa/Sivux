@@ -200,10 +200,30 @@ input[type="button"] {
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
   color: var(--text);
+}
+
+.logo-mark {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.65rem;
+  flex-shrink: 0;
+  display: block;
+}
+
+.logo-mark--footer {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+}
+
+.logo-mark--chat {
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0.5rem;
 }
 
 .logo-dot { color: var(--accent); }
@@ -1017,9 +1037,9 @@ input[type="button"] {
   }
 }
 
-.footer-logo {
-  color: var(--text);
+.footer-logo-row {
   margin: 0 0 0.5rem;
+  line-height: 0;
 }
 
 .footer-tagline {
@@ -1163,6 +1183,13 @@ input[type="button"] {
   padding: 0.85rem 1rem;
   background: #151a2c;
   border-bottom: 1px solid var(--line);
+}
+
+.chatbot-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
 }
 
 .chatbot-title {

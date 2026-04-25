@@ -49,9 +49,9 @@
         "url": "https://sivux.fi/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://sivux.fi/icon-512.png",
-          "width": 512,
-          "height": 512
+          "url": "https://sivux.fi/favicon.svg",
+          "width": 180,
+          "height": 180
         },
         "email": "info@sivux.fi",
         "telephone": "+358414967337",
@@ -95,7 +95,9 @@
 
   <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="logo" href="#top" aria-label="Sivux etusivu">Sivux<span class="logo-dot">.</span></a>
+      <a class="logo" href="#top" aria-label="Sivux etusivu">
+        <img class="logo-mark" src="favicon.svg" alt="" width="38" height="38" decoding="async" />
+      </a>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Avaa valikko">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -354,7 +356,9 @@
   <footer class="site-footer">
     <div class="container footer-grid" data-reveal-group>
       <div class="footer-brand">
-        <p class="logo footer-logo">Sivux<span class="logo-dot">.</span></p>
+        <p class="footer-logo-row">
+          <img class="logo-mark logo-mark--footer" src="favicon.svg" alt="Sivux" width="32" height="32" decoding="async" />
+        </p>
         <p class="footer-tagline">Premium-tason verkkosivut yrityksille.</p>
       </div>
       <div>
@@ -395,9 +399,12 @@
     </button>
     <div class="chatbot-panel" id="chatbot-panel" hidden>
       <header class="chatbot-header">
-        <div>
-          <p class="chatbot-title">Sivux Chat</p>
-          <p class="chatbot-subtitle">Kysy yleisistä asioista</p>
+        <div class="chatbot-header-brand">
+          <img class="logo-mark logo-mark--chat" src="favicon.svg" alt="" width="30" height="30" decoding="async" />
+          <div>
+            <p class="chatbot-title">Sivux Chat</p>
+            <p class="chatbot-subtitle">Kysy yleisistä asioista</p>
+          </div>
         </div>
         <button type="button" class="chatbot-close" id="chatbot-close" aria-label="Sulje chat">×</button>
       </header>
