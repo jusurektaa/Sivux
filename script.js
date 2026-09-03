@@ -671,6 +671,12 @@
   function initTracking() {
     function emitEvent(name, params) {
       try {
+        if (typeof window.va === "function") {
+          window.va("event", {
+            name: name,
+            data: params || {},
+          });
+        }
         if (typeof window.gtag === "function") {
           window.gtag("event", name, params || {});
           return;
@@ -925,10 +931,135 @@
     });
   }
 
+  function initMotionPolish() {
+    if (prefersReducedMotion() || typeof window.Motion === "undefined") {
+      return;
+    }
+
+    var animate = window.Motion.animate;
+    var hover = window.Motion.hover;
+    if (typeof animate !== "function") {
+      return;
+    }
+
+    document.documentElement.classList.add("has-motion");
+
+    var springSoft = { type: "spring", stiffness: 380, damping: 28 };
+    var springSnappy = { type: "spring", stiffness: 460, damping: 24 };
+
+    if (typeof hover === "function") {
+      hover(".btn-primary, .btn-ghost, .nav-cta", function (element) {
+        animate(element, { y: -3, scale: 1.03 }, springSnappy);
+        return function () {
+          animate(element, { y: 0, scale: 1 }, springSoft);
+        };
+      });
+
+      hover(".card, .price-card", function (element) {
+        animate(element, { y: -6, scale: 1.015 }, springSoft);
+        return function () {
+          animate(element, { y: 0, scale: 1 }, springSoft);
+        };
+      });
+    }
+
+    document.querySelectorAll(".faq-item").forEach(function (details) {
+      var summary = details.querySelector("summary");
+      if (!summary) {
+        return;
+      }
+
+      var answer = details.querySelector(".faq-answer");
+      if (!answer) {
+        answer = document.createElement("div");
+        answer.className = "faq-answer";
+        Array.prototype.slice.call(details.children).forEach(function (child) {
+          if (child !== summary) {
+            answer.appendChild(child);
+          }
+        });
+        details.appendChild(answer);
+      }
+
+      var animating = false;
+
+      function openFaq() {
+        details.open = true;
+        answer.style.height = "auto";
+        var target = answer.scrollHeight;
+        answer.style.height = "0px";
+        answer.style.opacity = "0";
+        void answer.offsetHeight;
+        animating = true;
+        animate(
+          answer,
+          { height: target + "px", opacity: 1 },
+          Object.assign({}, springSoft, {
+            onComplete: function () {
+              answer.style.height = "auto";
+              animating = false;
+            },
+          })
+        );
+      }
+
+      function closeFaq() {
+        var current = answer.scrollHeight;
+        answer.style.height = current + "px";
+        animating = true;
+        animate(
+          answer,
+          { height: "0px", opacity: 0 },
+          Object.assign({}, springSoft, {
+            onComplete: function () {
+              details.open = false;
+              answer.style.height = "";
+              animating = false;
+            },
+          })
+        );
+      }
+
+      summary.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (animating) {
+          return;
+        }
+        if (details.open) {
+          closeFaq();
+        } else {
+          document.querySelectorAll(".faq-item[open]").forEach(function (other) {
+            if (other !== details) {
+              var otherAnswer = other.querySelector(".faq-answer");
+              if (!otherAnswer) {
+                other.open = false;
+                return;
+              }
+              otherAnswer.style.height = otherAnswer.scrollHeight + "px";
+              animate(
+                otherAnswer,
+                { height: "0px", opacity: 0 },
+                Object.assign({}, springSoft, {
+                  onComplete: function () {
+                    other.open = false;
+                    otherAnswer.style.height = "";
+                  },
+                })
+              );
+            }
+          });
+          openFaq();
+        }
+      });
+    });
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initHeroTitleAnimation);
+    document.addEventListener("DOMContentLoaded", initMotionPolish);
   } else {
     initHeroTitleAnimation();
+    initMotionPolish();
   }
 
   if (document.readyState === "loading") {
